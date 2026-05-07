@@ -4,78 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CarDoc — Receita Digital do Seu Carro</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --navy:    #0B1F3A;
+      --blue:    #1A3D6B;
+      --mid:     #2B5BA8;
+      --accent:  #4A8FE7;
+      --bright:  #6FAAEF;
+      --sky:     #E8F1FC;
+      --white:   #FFFFFF;
+      --off:     #F5F8FF;
+      --border:  #D6E4F7;
+      --text:    #0B1F3A;
+      --muted:   #6B82A0;
+      --green:   #0E7C5A;
+      --green-bg:#E6F5F0;
+      --amber:   #92580A;
+      --amber-bg:#FEF3E2;
+      --r:       14px;
+      --r-lg:    20px;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #F4F6F9;
-      color: #1a1a1a;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off);
+      color: var(--text);
       min-height: 100vh;
     }
     .app-wrap {
       max-width: 600px;
       margin: 0 auto;
-      background: #fff;
+      background: var(--white);
       min-height: 100vh;
-      box-shadow: 0 0 40px rgba(0,0,0,0.08);
+      box-shadow: 0 0 60px rgba(11,31,58,0.10);
     }
     .screen { display: none; }
     .screen.active { display: block; }
 
+    /* ── HEADER ── */
     .header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid #eee;
-      background: #fff;
+      display: flex; align-items: center; gap: 14px;
+      padding: 1.1rem 1.5rem;
+      background: var(--navy);
       position: sticky; top: 0; z-index: 10;
     }
     .logo-icon {
       width: 40px; height: 40px; border-radius: 12px;
-      background: #1B4F72;
+      background: var(--mid);
       display: flex; align-items: center; justify-content: center;
       font-size: 20px;
     }
-    .logo-text { font-size: 20px; font-weight: 700; color: #1B4F72; }
-    .logo-sub { font-size: 12px; color: #888; margin-top: 1px; }
+    .logo-text { font-size: 19px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
+    .logo-sub { font-size: 11px; color: var(--bright); margin-top: 1px; font-weight: 400; }
 
-    .form-wrap { padding: 1.25rem 1.5rem 2.5rem; }
+    /* ── FORM ── */
+    .form-wrap { padding: 1.5rem 1.5rem 3rem; }
     .section-title {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      color: #999; text-transform: uppercase;
-      margin: 1.5rem 0 0.75rem;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+      margin: 1.75rem 0 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
     }
     .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: 13px; color: #555; margin-bottom: 5px; font-weight: 500; }
+    .field label {
+      display: block; font-size: 12px; color: var(--muted);
+      margin-bottom: 6px; font-weight: 500; letter-spacing: 0.02em;
+    }
     .field input, .field select {
-      width: 100%; padding: 10px 13px; font-size: 15px;
-      border: 1.5px solid #e0e0e0; border-radius: 10px;
-      background: #fff; color: #1a1a1a; outline: none;
+      width: 100%; padding: 11px 14px; font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      border: 1.5px solid var(--border); border-radius: var(--r);
+      background: var(--white); color: var(--text); outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
       -webkit-appearance: none;
     }
     .field input:focus, .field select:focus {
-      border-color: #1B4F72;
-      box-shadow: 0 0 0 3px rgba(27,79,114,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(74,143,231,0.12);
     }
-    .field input::placeholder { color: #bbb; }
+    .field input::placeholder { color: #BCC8DC; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .btn-primary {
       width: 100%; padding: 14px;
-      background: #1B4F72; color: white;
-      border: none; border-radius: 12px;
-      font-size: 16px; font-weight: 600; cursor: pointer;
-      margin-top: 1.75rem;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: var(--r);
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: 2rem;
       transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.2px;
     }
-    .btn-primary:hover { background: #154060; }
+    .btn-primary:hover { background: var(--blue); }
     .btn-primary:active { transform: scale(0.98); }
 
     .btn-wpp {
       width: 100%; padding: 14px;
       background: #25D366; color: white;
-      border: none; border-radius: 12px;
-      font-size: 16px; font-weight: 600; cursor: pointer;
+      border: none; border-radius: var(--r);
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
       display: flex; align-items: center; justify-content: center; gap: 10px;
       transition: background 0.15s, transform 0.1s;
     }
@@ -84,113 +114,235 @@
 
     .btn-secondary {
       width: 100%; padding: 12px;
-      background: transparent; color: #666;
-      border: 1.5px solid #e0e0e0; border-radius: 12px;
-      font-size: 15px; font-weight: 500; cursor: pointer;
+      background: transparent; color: var(--muted);
+      border: 1.5px solid var(--border); border-radius: var(--r);
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
       margin-top: 0.75rem;
       transition: background 0.15s;
     }
-    .btn-secondary:hover { background: #f5f5f5; }
+    .btn-secondary:hover { background: var(--off); }
 
-    /* PREVIEW */
+    /* ── PREVIEW ── */
     .preview-wrap { padding: 1.5rem 1.5rem 0; }
     .preview-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      color: #999; text-transform: uppercase; margin-bottom: 0.75rem;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 0.75rem;
     }
     .wpp-screen {
-      background: #ECE5DD;
-      border-radius: 14px;
-      padding: 1rem;
-      margin-bottom: 0;
+      background: #DCE8E8;
+      border-radius: var(--r-lg);
+      padding: 1.25rem;
     }
     .wpp-bubble {
-      background: #DCF8C6;
-      border-radius: 12px 12px 12px 2px;
-      padding: 12px 14px;
-      font-size: 14px; line-height: 1.65; color: #1a1a1a;
-      max-width: 90%;
+      background: var(--white);
+      border-radius: 14px 14px 14px 2px;
+      padding: 14px 16px;
+      font-size: 14px; line-height: 1.7; color: var(--text);
+      max-width: 92%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
     .wpp-link-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      background: #1B4F72; color: white;
+      background: var(--navy); color: white;
       padding: 9px 15px; border-radius: 8px;
       font-size: 13px; font-weight: 600;
-      margin-top: 10px; text-decoration: none;
-      cursor: default;
+      margin-top: 10px;
     }
-
     .action-wrap { padding: 1.25rem 1.5rem 2.5rem; }
 
-    /* RECEITA CLIENTE */
-    .etiqueta-header {
-      background: #1B4F72;
-      padding: 1.5rem 1.5rem 1.25rem;
+    /* ── RECEITA DO CLIENTE ── */
+    .receita-header {
+      background: var(--navy);
+      padding: 0;
+      overflow: hidden;
     }
-    .et-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
-    .et-marca { font-size: 12px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.06em; }
-    .et-titulo { font-size: 24px; font-weight: 700; color: white; margin-top: 2px; }
-    .et-placa-box {
-      background: rgba(255,255,255,0.15);
-      border-radius: 10px; padding: 10px 14px; text-align: center;
+    .receita-hero {
+      padding: 1.75rem 1.5rem 1.25rem;
+      background: linear-gradient(135deg, #0B1F3A 0%, #1A3D6B 100%);
     }
-    .et-placa { font-size: 20px; font-weight: 700; color: white; letter-spacing: 0.12em; }
-    .et-placa-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-    .et-oficina-bar {
-      background: rgba(0,0,0,0.18); border-radius: 8px; padding: 8px 12px;
-      display: flex; align-items: center; gap: 8px;
+    .rh-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.25rem; }
+    .rh-marca { font-size: 11px; color: var(--bright); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+    .rh-titulo { font-size: 26px; font-weight: 700; color: var(--white); margin-top: 3px; letter-spacing: -0.5px; }
+    .rh-placa-box {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px; padding: 10px 16px; text-align: center;
+      backdrop-filter: blur(10px);
     }
-    .of-label { font-size: 11px; color: rgba(255,255,255,0.6); }
-    .of-nome { font-size: 14px; font-weight: 600; color: white; }
+    .rh-placa {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px; font-weight: 500; color: var(--white); letter-spacing: 0.14em;
+    }
+    .rh-placa-label { font-size: 9px; color: var(--bright); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+    .rh-oficina-bar {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .of-label { font-size: 10px; color: var(--bright); letter-spacing: 0.06em; text-transform: uppercase; }
+    .of-nome { font-size: 15px; font-weight: 600; color: var(--white); margin-top: 1px; }
 
-    .etiqueta-body { padding: 1.5rem; }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.25rem; }
-    .info-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
-    .info-value { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+    /* ── BODY RECEITA ── */
+    .receita-body { padding: 1.5rem; }
 
-    .proxima-card {
-      background: #EAF2FB; border-radius: 14px;
-      padding: 1rem 1.25rem; margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 14px;
+    .info-strip {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border-radius: var(--r); overflow: hidden;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .info-cell {
+      background: var(--white);
+      padding: 14px 16px;
+    }
+    .info-cell:nth-child(1) { border-radius: var(--r) 0 0 0; }
+    .info-cell:nth-child(2) { border-radius: 0 var(--r) 0 0; }
+    .info-cell:nth-child(3) { border-radius: 0 0 0 var(--r); }
+    .info-cell:nth-child(4) { border-radius: 0 0 var(--r) 0; }
+    .info-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 500; margin-bottom: 4px; }
+    .info-value { font-size: 15px; font-weight: 600; color: var(--text); }
+
+    /* próxima troca destaque */
+    .proxima-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      border-radius: var(--r-lg); padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 16px;
     }
     .proxima-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: #1B4F72;
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(255,255,255,0.12);
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
+      font-size: 26px; flex-shrink: 0;
     }
-    .proxima-label { font-size: 11px; color: #185FA5; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-    .proxima-value { font-size: 17px; font-weight: 700; color: #0C447C; margin-top: 3px; }
+    .proxima-label { font-size: 10px; color: var(--bright); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 500; }
+    .proxima-value { font-size: 19px; font-weight: 700; color: var(--white); margin-top: 4px; letter-spacing: -0.3px; }
 
+    /* ── CARROSSEL PRÓXIMAS TROCAS ── */
+    .section-hdr {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+      margin: 1.5rem 0 0.75rem;
+    }
+    .carousel-wrap { position: relative; margin-bottom: 1.5rem; }
+    .carousel-track {
+      display: flex; gap: 10px;
+      overflow-x: auto; padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-card {
+      min-width: 160px; flex-shrink: 0;
+      background: var(--off);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r); padding: 14px;
+      cursor: default;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .carousel-card.current {
+      background: var(--sky);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(74,143,231,0.10);
+    }
+    .cc-badge {
+      display: inline-block; font-size: 9px; font-weight: 600;
+      padding: 3px 8px; border-radius: 20px; margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .cc-badge.atual { background: var(--sky); color: var(--mid); }
+    .cc-badge.prox { background: var(--green-bg); color: var(--green); }
+    .cc-badge.fut { background: var(--amber-bg); color: var(--amber); }
+    .cc-km { font-size: 17px; font-weight: 700; color: var(--text); font-family: 'DM Mono', monospace; }
+    .cc-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .cc-data { font-size: 11px; color: var(--muted); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+
+    /* ── HISTÓRICO DROPDOWN ── */
+    .historico-wrap { margin-bottom: 1.25rem; }
+    .historico-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--off); border: 1.5px solid var(--border);
+      border-radius: var(--r); cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .historico-toggle:hover { background: var(--sky); }
+    .ht-left { display: flex; align-items: center; gap: 10px; }
+    .ht-icon { font-size: 18px; }
+    .ht-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .ht-count { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .ht-arrow {
+      font-size: 12px; color: var(--muted);
+      transition: transform 0.25s;
+    }
+    .ht-arrow.open { transform: rotate(180deg); }
+
+    .historico-body {
+      display: none;
+      border: 1.5px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--r) var(--r);
+      overflow: hidden;
+    }
+    .historico-body.open { display: block; }
+    .hist-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+    .hist-item:last-child { border-bottom: none; }
+    .hist-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 5px;
+    }
+    .hist-dot.old { background: var(--border); }
+    .hist-servico { font-size: 14px; font-weight: 600; color: var(--text); }
+    .hist-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .hist-badge {
+      margin-left: auto; flex-shrink: 0;
+      font-size: 10px; font-weight: 600; padding: 3px 8px;
+      border-radius: 20px;
+    }
+    .hist-badge.troca { background: var(--sky); color: var(--mid); }
+    .hist-badge.revisao { background: var(--green-bg); color: var(--green); }
+    .hist-badge.pneu { background: var(--amber-bg); color: var(--amber); }
+
+    /* obs */
     .obs-card {
-      border: 1.5px solid #FEE2B3; background: #FFFBF2;
-      border-radius: 12px; padding: 1rem 1.1rem;
-      font-size: 14px; color: #7A5200; line-height: 1.6;
+      border: 1.5px solid #FEE2B3; background: var(--amber-bg);
+      border-radius: var(--r); padding: 1rem 1.1rem;
+      font-size: 14px; color: var(--amber); line-height: 1.6;
+      margin-bottom: 1.25rem;
     }
-    .obs-title { font-size: 11px; font-weight: 700; color: #7A5200; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+    .obs-title { font-size: 10px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
 
-    .etiqueta-footer {
-      border-top: 1px solid #eee; padding: 1rem 1.5rem;
+    /* footer receita */
+    .receita-footer {
+      border-top: 1px solid var(--border); padding: 1rem 1.5rem;
       display: flex; align-items: center; justify-content: space-between;
-      background: #FAFAFA;
+      background: var(--off);
     }
-    .footer-data { font-size: 12px; color: #aaa; }
+    .footer-data { font-size: 11px; color: var(--muted); }
     .footer-badge {
-      background: #1B4F72; color: white;
+      background: var(--navy); color: var(--white);
       font-size: 11px; font-weight: 700;
-      padding: 5px 12px; border-radius: 20px; letter-spacing: 0.05em;
+      padding: 5px 14px; border-radius: 20px; letter-spacing: 0.05em;
     }
 
     @media (max-width: 400px) {
       .row { grid-template-columns: 1fr; }
-      .info-grid { grid-template-columns: 1fr; }
+      .info-strip { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 <div class="app-wrap">
 
-  <!-- FORMULÁRIO -->
+  <!-- ══ FORMULÁRIO ══ -->
   <div id="screen-form" class="screen active">
     <div class="header">
       <div class="logo-icon">🚗</div>
@@ -208,17 +360,17 @@
         </div>
         <div class="field">
           <label>KM atual</label>
-          <input id="km" type="number" placeholder="Ex: 52400" />
+          <input id="km" type="number" placeholder="52400" />
         </div>
       </div>
       <div class="row">
         <div class="field">
           <label>Marca</label>
-          <input id="marca" type="text" placeholder="Ex: Toyota" />
+          <input id="marca" type="text" placeholder="Toyota" />
         </div>
         <div class="field">
           <label>Modelo</label>
-          <input id="modelo" type="text" placeholder="Ex: Corolla" />
+          <input id="modelo" type="text" placeholder="Corolla" />
         </div>
       </div>
 
@@ -238,11 +390,11 @@
       <div class="row">
         <div class="field">
           <label>Próxima troca (KM)</label>
-          <input id="proxKm" type="number" placeholder="Ex: 57400" />
+          <input id="proxKm" type="number" placeholder="57400" />
         </div>
         <div class="field">
           <label>Prazo (meses)</label>
-          <input id="proxMeses" type="number" placeholder="Ex: 6" />
+          <input id="proxMeses" type="number" placeholder="6" />
         </div>
       </div>
       <div class="field">
@@ -253,24 +405,24 @@
       <div class="section-title">Dados do cliente</div>
       <div class="field">
         <label>Nome do cliente</label>
-        <input id="nomeCliente" type="text" placeholder="Ex: João Silva" />
+        <input id="nomeCliente" type="text" placeholder="João Silva" />
       </div>
       <div class="field">
-        <label>WhatsApp do cliente (com DDD)</label>
-        <input id="whatsapp" type="tel" placeholder="Ex: 11999999999" />
+        <label>WhatsApp (com DDD)</label>
+        <input id="whatsapp" type="tel" placeholder="11999999999" />
       </div>
 
       <div class="section-title">Sua oficina</div>
       <div class="field">
         <label>Nome da oficina</label>
-        <input id="oficina" type="text" placeholder="Ex: Auto Center Silva" />
+        <input id="oficina" type="text" placeholder="Auto Center Silva" />
       </div>
 
-      <button class="btn-primary" onclick="gerarReceita()">Gerar Receita Digital 🚗</button>
+      <button class="btn-primary" onclick="gerarReceita()">Gerar Receita Digital →</button>
     </div>
   </div>
 
-  <!-- PREVIEW + ENVIO -->
+  <!-- ══ PREVIEW ══ -->
   <div id="screen-preview" class="screen">
     <div class="header">
       <div class="logo-icon">🚗</div>
@@ -279,39 +431,36 @@
         <div class="logo-sub">Pronto para enviar</div>
       </div>
     </div>
-
     <div class="preview-wrap">
       <div class="preview-label">Prévia — como o cliente vai receber</div>
       <div class="wpp-screen">
         <div class="wpp-bubble" id="preview-msg"></div>
       </div>
     </div>
-
     <div class="action-wrap">
       <button class="btn-wpp" onclick="enviarWhatsApp()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Enviar no WhatsApp
       </button>
       <button class="btn-secondary" onclick="voltarForm()">← Editar receita</button>
     </div>
   </div>
 
-  <!-- RECEITA DO CLIENTE -->
+  <!-- ══ RECEITA DO CLIENTE ══ -->
   <div id="screen-receita" class="screen">
-    <div class="etiqueta-header">
-      <div class="et-top">
+
+    <div class="receita-hero">
+      <div class="rh-top">
         <div>
-          <div class="et-marca" id="r-marca-modelo">Veículo</div>
-          <div class="et-titulo">Receita Digital</div>
+          <div class="rh-marca" id="r-marca-modelo">Veículo</div>
+          <div class="rh-titulo">Receita Digital</div>
         </div>
-        <div class="et-placa-box">
-          <div class="et-placa" id="r-placa">—</div>
-          <div class="et-placa-label">Placa</div>
+        <div class="rh-placa-box">
+          <div class="rh-placa" id="r-placa">—</div>
+          <div class="rh-placa-label">Placa</div>
         </div>
       </div>
-      <div class="et-oficina-bar">
+      <div class="rh-oficina-bar">
         <div>
           <div class="of-label">Realizado em</div>
           <div class="of-nome" id="r-oficina">—</div>
@@ -319,27 +468,30 @@
       </div>
     </div>
 
-    <div class="etiqueta-body">
-      <div class="info-grid">
-        <div>
+    <div class="receita-body">
+
+      <!-- infos básicas -->
+      <div class="info-strip">
+        <div class="info-cell">
           <div class="info-label">Data da troca</div>
           <div class="info-value" id="r-data">—</div>
         </div>
-        <div>
+        <div class="info-cell">
           <div class="info-label">KM na troca</div>
           <div class="info-value" id="r-km">—</div>
         </div>
-        <div>
+        <div class="info-cell">
           <div class="info-label">Óleo utilizado</div>
           <div class="info-value" id="r-oleo">—</div>
         </div>
-        <div>
+        <div class="info-cell">
           <div class="info-label">Cliente</div>
           <div class="info-value" id="r-cliente">—</div>
         </div>
       </div>
 
-      <div class="proxima-card">
+      <!-- próxima troca destaque -->
+      <div class="proxima-banner">
         <div class="proxima-icon">🔔</div>
         <div>
           <div class="proxima-label">Próxima troca recomendada</div>
@@ -347,19 +499,45 @@
         </div>
       </div>
 
+      <!-- observação mecânico -->
       <div class="obs-card" id="r-obs-wrap" style="display:none;">
         <div class="obs-title">⚠️ Observação do mecânico</div>
         <span id="r-obs"></span>
       </div>
-    </div>
 
-    <div class="etiqueta-footer">
+      <!-- ── CARROSSEL PRÓXIMAS TROCAS ── -->
+      <div class="section-hdr">Calendário de trocas</div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="carousel-track"></div>
+      </div>
+
+      <!-- ── HISTÓRICO ── -->
+      <div class="section-hdr">Histórico de manutenções</div>
+      <div class="historico-wrap">
+        <button class="historico-toggle" onclick="toggleHistorico()">
+          <div class="ht-left">
+            <span class="ht-icon">📋</span>
+            <div>
+              <div class="ht-title">Ver histórico completo</div>
+              <div class="ht-count">5 registros encontrados</div>
+            </div>
+          </div>
+          <span class="ht-arrow" id="ht-arrow">▼</span>
+        </button>
+        <div class="historico-body" id="historico-body">
+          <!-- preenchido via JS -->
+        </div>
+      </div>
+
+    </div><!-- /receita-body -->
+
+    <div class="receita-footer">
       <div class="footer-data" id="r-footer-data">—</div>
       <div class="footer-badge">CarDoc</div>
     </div>
   </div>
 
-</div>
+</div><!-- /app-wrap -->
 
 <script>
   const BASE_URL = window.location.origin + window.location.pathname;
@@ -369,6 +547,7 @@
     if (params.get('v') === '1') mostrarReceita(params);
   });
 
+  // ── Gerar receita ──
   function gerarReceita() {
     const d = coletarDados();
     const params = montarParams(d);
@@ -381,8 +560,8 @@
     const veiculo = [d.marca, d.modelo].filter(Boolean).join(' ');
 
     let preview = `Olá, <b>${nome}</b>! 👋<br><br>`;
-    preview += `Você acabou de efetuar a troca de óleo do seu carro`;
-    if (veiculo) preview += ` <b>(${veiculo})</b>`;
+    preview += `Acabou de realizar a troca de óleo do seu`;
+    if (veiculo) preview += ` <b>${veiculo}</b>`;
     preview += ` na <b>${oficina}</b>. ✅<br><br>`;
     preview += `Acesse sua receita digital completa:<br>`;
     preview += `<span class="wpp-link-btn">🔗 Ver minha receita CarDoc</span>`;
@@ -402,10 +581,10 @@
     const veiculo = [d.marca, d.modelo].filter(Boolean).join(' ');
 
     let msg = `Olá, ${nome}! 👋\n\n`;
-    msg += `Você acabou de efetuar a troca de óleo do seu carro`;
+    msg += `Você realizou a troca de óleo do seu carro`;
     if (veiculo) msg += ` (${veiculo})`;
     msg += ` na *${oficina}*. ✅\n\n`;
-    msg += `Acesse sua receita digital completa com todas as informações da revisão:\n\n`;
+    msg += `Acesse sua receita digital com histórico e próximas revisões:\n\n`;
     msg += `🔗 ${link}`;
 
     const url = `https://wa.me/${numero ? '55' + numero : ''}?text=${encodeURIComponent(msg)}`;
@@ -415,57 +594,58 @@
   function montarParams(d) {
     const p = new URLSearchParams();
     p.set('v', '1');
-    if (d.placa) p.set('pl', d.placa);
-    if (d.km) p.set('km', d.km);
-    if (d.marca) p.set('ma', d.marca);
-    if (d.modelo) p.set('mo', d.modelo);
-    if (d.oleo) p.set('ol', d.oleo);
-    if (d.proxKm) p.set('pk', d.proxKm);
-    if (d.proxMeses) p.set('pm', d.proxMeses);
-    if (d.obs) p.set('ob', d.obs);
+    if (d.placa)       p.set('pl', d.placa);
+    if (d.km)          p.set('km', d.km);
+    if (d.marca)       p.set('ma', d.marca);
+    if (d.modelo)      p.set('mo', d.modelo);
+    if (d.oleo)        p.set('ol', d.oleo);
+    if (d.proxKm)      p.set('pk', d.proxKm);
+    if (d.proxMeses)   p.set('pm', d.proxMeses);
+    if (d.obs)         p.set('ob', d.obs);
     if (d.nomeCliente) p.set('nc', d.nomeCliente);
-    if (d.oficina) p.set('of', d.oficina);
+    if (d.oficina)     p.set('of', d.oficina);
     p.set('dt', d.data);
     return p;
   }
 
   function coletarDados() {
     return {
-      placa: document.getElementById('placa').value.toUpperCase(),
-      km: document.getElementById('km').value,
-      marca: document.getElementById('marca').value,
-      modelo: document.getElementById('modelo').value,
-      oleo: document.getElementById('oleo').value,
-      proxKm: document.getElementById('proxKm').value,
-      proxMeses: document.getElementById('proxMeses').value,
-      obs: document.getElementById('obs').value,
+      placa:       document.getElementById('placa').value.toUpperCase(),
+      km:          document.getElementById('km').value,
+      marca:       document.getElementById('marca').value,
+      modelo:      document.getElementById('modelo').value,
+      oleo:        document.getElementById('oleo').value,
+      proxKm:      document.getElementById('proxKm').value,
+      proxMeses:   document.getElementById('proxMeses').value,
+      obs:         document.getElementById('obs').value,
       nomeCliente: document.getElementById('nomeCliente').value,
-      whatsapp: document.getElementById('whatsapp').value,
-      oficina: document.getElementById('oficina').value,
-      data: new Date().toLocaleDateString('pt-BR'),
+      whatsapp:    document.getElementById('whatsapp').value,
+      oficina:     document.getElementById('oficina').value,
+      data:        new Date().toLocaleDateString('pt-BR'),
     };
   }
 
+  // ── Mostrar receita ──
   function mostrarReceita(p) {
-    const km = p.get('km');
-    const proxKm = p.get('pk');
-    const proxMeses = p.get('pm');
-    const obs = p.get('ob');
-    const data = p.get('dt') || new Date().toLocaleDateString('pt-BR');
-    const marca = p.get('ma') || '';
-    const modelo = p.get('mo') || '';
+    const km       = parseInt(p.get('km')) || 50000;
+    const proxKm   = parseInt(p.get('pk')) || km + 5000;
+    const proxMeses= parseInt(p.get('pm')) || 6;
+    const obs      = p.get('ob');
+    const data     = p.get('dt') || new Date().toLocaleDateString('pt-BR');
+    const marca    = p.get('ma') || '';
+    const modelo   = p.get('mo') || '';
 
-    document.getElementById('r-placa').textContent = p.get('pl') || '—';
+    document.getElementById('r-placa').textContent       = p.get('pl') || '—';
     document.getElementById('r-marca-modelo').textContent = [marca, modelo].filter(Boolean).join(' ') || 'Veículo';
-    document.getElementById('r-data').textContent = data;
-    document.getElementById('r-km').textContent = km ? Number(km).toLocaleString('pt-BR') + ' km' : '—';
-    document.getElementById('r-oleo').textContent = p.get('ol') || '—';
-    document.getElementById('r-cliente').textContent = p.get('nc') || '—';
-    document.getElementById('r-oficina').textContent = p.get('of') || '—';
+    document.getElementById('r-data').textContent        = data;
+    document.getElementById('r-km').textContent          = km ? Number(km).toLocaleString('pt-BR') + ' km' : '—';
+    document.getElementById('r-oleo').textContent        = p.get('ol') || '—';
+    document.getElementById('r-cliente').textContent     = p.get('nc') || '—';
+    document.getElementById('r-oficina').textContent     = p.get('of') || '—';
     document.getElementById('r-footer-data').textContent = 'Emitido em ' + data;
 
     let prox = '';
-    if (proxKm) prox += Number(proxKm).toLocaleString('pt-BR') + ' km';
+    if (proxKm)    prox += Number(proxKm).toLocaleString('pt-BR') + ' km';
     if (proxKm && proxMeses) prox += ' ou ';
     if (proxMeses) prox += proxMeses + ' meses';
     document.getElementById('r-proxima').textContent = prox || '—';
@@ -475,9 +655,66 @@
       document.getElementById('r-obs-wrap').style.display = 'block';
     }
 
+    buildCarrossel(km, proxKm, proxMeses);
+    buildHistorico(km, p.get('ol'));
+
     document.getElementById('screen-form').classList.remove('active');
     document.getElementById('screen-receita').classList.add('active');
     document.title = `CarDoc — Receita de ${p.get('nc') || 'cliente'}`;
+  }
+
+  // ── Carrossel de próximas trocas ──
+  function buildCarrossel(kmAtual, proxKm, proxMeses) {
+    const track = document.getElementById('carousel-track');
+    const oleos = ['5W-30 Sintético','5W-40 Sintético','5W-30 Sintético'];
+    const cards = [
+      { badge:'atual',  label:'Esta troca',      km: kmAtual, mes: 0,             oleo: oleos[0] },
+      { badge:'prox',   label:'Próxima',         km: proxKm,  mes: proxMeses,     oleo: oleos[1] },
+      { badge:'fut',    label:'Em seguida',      km: proxKm + (proxKm - kmAtual), mes: proxMeses * 2, oleo: oleos[2] },
+    ];
+    const hoje = new Date();
+    track.innerHTML = cards.map((c, i) => {
+      const dataEst = new Date(hoje);
+      dataEst.setMonth(dataEst.getMonth() + c.mes);
+      const dataStr = c.mes === 0 ? 'Hoje' : dataEst.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
+      return `
+        <div class="carousel-card ${i === 0 ? 'current' : ''}">
+          <div class="cc-badge ${c.badge}">${c.label}</div>
+          <div class="cc-km">${Number(c.km).toLocaleString('pt-BR')}</div>
+          <div class="cc-label">km</div>
+          <div class="cc-data">📅 ${dataStr}<br>🛢️ ${c.oleo}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Histórico imaginário ──
+  function buildHistorico(kmAtual, oleoAtual) {
+    const intervalo = 5000;
+    const historico = [
+      { km: kmAtual,              servico: 'Troca de óleo',          tipo: 'troca',   obs: oleoAtual || '5W-30 Sintético', atual: true },
+      { km: kmAtual - intervalo,  servico: 'Troca de óleo + filtro', tipo: 'troca',   obs: '5W-40 Sintético' },
+      { km: kmAtual - intervalo*2,servico: 'Revisão completa',       tipo: 'revisao', obs: 'Pastilhas, fluido de freio, correia' },
+      { km: kmAtual - intervalo*3,servico: 'Troca de óleo',          tipo: 'troca',   obs: '10W-40 Semissintético' },
+      { km: kmAtual - intervalo*4,servico: 'Rodízio de pneus',       tipo: 'pneu',    obs: 'Pneus dianteiros trocados de posição' },
+    ];
+    const body = document.getElementById('historico-body');
+    body.innerHTML = historico.map(h => `
+      <div class="hist-item">
+        <div class="hist-dot ${h.atual ? '' : 'old'}"></div>
+        <div style="flex:1">
+          <div class="hist-servico">${h.servico}</div>
+          <div class="hist-meta">${Number(h.km).toLocaleString('pt-BR')} km · ${h.obs}</div>
+        </div>
+        <div class="hist-badge ${h.tipo}">${h.tipo === 'troca' ? 'Troca' : h.tipo === 'revisao' ? 'Revisão' : 'Pneu'}</div>
+      </div>`).join('');
+  }
+
+  // ── Toggle histórico ──
+  function toggleHistorico() {
+    const body  = document.getElementById('historico-body');
+    const arrow = document.getElementById('ht-arrow');
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
   }
 
   function voltarForm() {
