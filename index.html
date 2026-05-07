@@ -333,6 +333,61 @@
       padding: 5px 14px; border-radius: 20px; letter-spacing: 0.05em;
     }
 
+    /* ── OFICINAS ── */
+    .oficina-loading {
+      font-size: 13px; color: var(--muted);
+      padding: 1rem 0;
+    }
+    .oficina-card {
+      min-width: 220px; flex-shrink: 0;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r); overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .oficina-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(74,143,231,0.12);
+    }
+    .oficina-top {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      padding: 14px 14px 10px;
+    }
+    .oficina-nome {
+      font-size: 14px; font-weight: 700; color: var(--white);
+      line-height: 1.3; margin-bottom: 4px;
+    }
+    .oficina-tipo {
+      font-size: 10px; color: var(--bright);
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .oficina-body { padding: 12px 14px; }
+    .oficina-stars { color: #F5A623; font-size: 13px; margin-bottom: 4px; }
+    .oficina-stars span { font-size: 12px; color: var(--muted); margin-left: 4px; }
+    .oficina-info {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 3px; display: flex; align-items: center; gap: 5px;
+    }
+    .oficina-dist {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      background: var(--sky); color: var(--mid);
+      padding: 2px 8px; border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .oficina-btn {
+      width: 100%; padding: 9px;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 6px;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .oficina-btn:hover { background: var(--blue); }
+
     @media (max-width: 400px) {
       .row { grid-template-columns: 1fr; }
       .info-strip { grid-template-columns: 1fr; }
@@ -505,6 +560,14 @@
         <span id="r-obs"></span>
       </div>
 
+      <!-- ── CARROSSEL OFICINAS ── -->
+      <div class="section-hdr">Oficinas próximas para sua próxima troca</div>
+      <div class="carousel-wrap" style="margin-bottom:1.5rem">
+        <div class="carousel-track" id="oficinas-track">
+          <div class="oficina-loading">📍 Buscando oficinas próximas...</div>
+        </div>
+      </div>
+
       <!-- ── CARROSSEL PRÓXIMAS TROCAS ── -->
       <div class="section-hdr">Calendário de trocas</div>
       <div class="carousel-wrap">
@@ -657,13 +720,74 @@
 
     buildCarrossel(km, proxKm, proxMeses);
     buildHistorico(km, p.get('ol'));
+    carregarOficinas();
 
     document.getElementById('screen-form').classList.remove('active');
     document.getElementById('screen-receita').classList.add('active');
     document.title = `CarDoc — Receita de ${p.get('nc') || 'cliente'}`;
   }
 
-  // ── Carrossel de próximas trocas ──
+  // ── Oficinas próximas ──
+  // Para usar a API real do Google Places, substitua YOUR_API_KEY abaixo
+  // e descomente o bloco "API REAL". O fallback imaginário ficará desativado.
+  const GOOGLE_API_KEY = 'YOUR_API_KEY'; // <- cole sua chave aqui
+
+  const OFICINAS_FAKE = [
+    { nome: 'Auto Center Silva',    tipo: 'Troca de óleo & revisão', stars: 4.8, reviews: 312, dist: '0,4 km', tel: '11999990001' },
+    { nome: 'Oficina do Zé',        tipo: 'Mecânica geral',          stars: 4.5, reviews: 187, dist: '0,9 km', tel: '11999990002' },
+    { nome: 'Rápido Oil Center',    tipo: 'Troca de óleo expressa',  stars: 4.7, reviews: 540, dist: '1,2 km', tel: '11999990003' },
+    { nome: 'TechCar Manutenção',   tipo: 'Mecânica & elétrica',     stars: 4.3, reviews: 98,  dist: '1,8 km', tel: '11999990004' },
+    { nome: 'Lubrax Premium',       tipo: 'Lubrificantes & filtros', stars: 4.9, reviews: 221, dist: '2,1 km', tel: '11999990005' },
+  ];
+
+  function buildOficinas(lista) {
+    const track = document.getElementById('oficinas-track');
+    track.innerHTML = lista.map(o => {
+      const estrelas = '★'.repeat(Math.floor(o.stars)) + (o.stars % 1 >= 0.5 ? '½' : '');
+      return `
+        <div class="oficina-card">
+          <div class="oficina-top">
+            <div class="oficina-nome">${o.nome}</div>
+            <div class="oficina-tipo">${o.tipo}</div>
+          </div>
+          <div class="oficina-body">
+            <div class="oficina-stars">${estrelas}<span>${o.stars} (${o.reviews} avaliações)</span></div>
+            <div class="oficina-dist">📍 ${o.dist}</div>
+            <a class="oficina-btn" href="tel:${o.tel}">
+              📞 Ligar agora
+            </a>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function carregarOficinas() {
+    if (GOOGLE_API_KEY !== 'YOUR_API_KEY') {
+      // ── API REAL ──
+      // Descomente e use quando tiver a chave do Google Places
+      // navigator.geolocation.getCurrentPosition(pos => {
+      //   const { latitude, longitude } = pos.coords;
+      //   fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=3000&type=car_repair&keyword=troca+de+oleo&key=${GOOGLE_API_KEY}`)
+      //     .then(r => r.json())
+      //     .then(data => {
+      //       const lista = data.results.slice(0, 5).map(p => ({
+      //         nome:    p.name,
+      //         tipo:    p.types[0] || 'Mecânica',
+      //         stars:   p.rating || 4.0,
+      //         reviews: p.user_ratings_total || 0,
+      //         dist:    '—',
+      //         tel:     p.formatted_phone_number || ''
+      //       }));
+      //       buildOficinas(lista);
+      //     });
+      // }, () => buildOficinas(OFICINAS_FAKE));
+    } else {
+      // Fallback imaginário para demonstração
+      setTimeout(() => buildOficinas(OFICINAS_FAKE), 600);
+    }
+  }
+
+
   function buildCarrossel(kmAtual, proxKm, proxMeses) {
     const track = document.getElementById('carousel-track');
     const oleos = ['5W-30 Sintético','5W-40 Sintético','5W-30 Sintético'];
